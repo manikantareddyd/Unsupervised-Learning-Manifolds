@@ -23,7 +23,7 @@ outimg_width = 30					# Width of output image
 # Ceate a graphical window to work in :
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 # Import the robot image
-robot_sprite = pygame.image.load("robot.png")
+robot_sprite = pygame.image.load("src/robot.png")
 
 def rot_center(image, angle):
 	"""rotate an image while keeping its center and size fixed"""
@@ -76,7 +76,7 @@ class Robot(object):
 		# Note the the image is assumed to be 32*32
 		# If you intend to use some other sprite for the 
 		# robot you make appropriate in the draw() function
-		self.image = pygame.image.load("robot.png")
+		self.image = pygame.image.load("src/robot.png")
 		self.x = x
 		self.y = y
 		self.theta = theta
@@ -240,8 +240,7 @@ import sys
 LOL = int(sys.argv[1])
 if LOL == -5000:
 	print 'lol'
-	mkdir('img/POS_RND')
-	for i in range(0,500):
+	for i in range(0,-LOL):
 		robot = Robot(x=randint(-180,180),y=randint(-180,180),theta=randint(0,360),FOV=120)
 		screen.fill(BGCOLOR)
 		draw_poly(room_coords)

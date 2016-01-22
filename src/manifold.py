@@ -7,7 +7,7 @@ from os import mkdir
 LOL = int(sys.argv[1])
 
 if LOL == -5000:
-	NumIter=500
+	NumIter=5000
 else:
 	X_cor = float(sys.argv[1])
 	Y_cor = float(sys.argv[2])

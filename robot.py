@@ -129,6 +129,7 @@ class Robot(object):
 		# you can use finer/coarser increments to get more 
 		# detailed/coarser pictures
 		increment = 0.2
+		flag=1
 		for x in numpy.arange(0,self.FOV,increment):
 			x,y = self.x, self.y
 			x_dash,y_dash = angle_to_twopoint((self.x,self.y),self.theta)
@@ -139,12 +140,18 @@ class Robot(object):
 			values
 			'''
 			if int_point:
-				# Surface.get_at() returns RGBA (red,green,blue,alpha) values -
-				# [:3] keeps only the first three i.e RGB values.
-				image_array.append(pygame.Surface.get_at(screen,[int(x) for x in center_coord(int_point[0],int_point[1])])[:3])
+				for i in range(flag):
+					image_array.append(pygame.Surface.get_at(screen,[int(x) for x in center_coord(int_point[0],int_point[1])])[:3])
+				flag = 1
+			else:
+				if image_array:
+					image_array.append(image_array[-1])
+				else:
+					flag += 1
 			self.theta += increment
 		self.theta = theta_ini
 		return image_array
+
 
 	def draw(self, surface):
 		"""Draw on the provided surface
@@ -211,19 +218,40 @@ def move_robot(x,y,theta):
 	"""
 	pass
 	
-robot = Robot(x=0,y=0,theta=0,FOV=120)
-i=1
-while 1:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			image_data = robot.take_picture(screen)
-			save_picture(image_data,'img/env.png')			
-			sys.exit()
-	# Fill the screen with specified background color
+# robot = Robot(x=0,y=0,theta=0,FOV=120)
+# i=1
+# while 1:
+# 	for event in pygame.event.get():
+# 		if event.type == pygame.QUIT:
+# 			image_data = robot.take_picture(screen)
+# 			save_picture(image_data,'img/env.png')			
+# 			sys.exit()
+# 	# Fill the screen with specified background color
+# 	screen.fill(BGCOLOR)
+# 	# Draw the room
+# 	draw_poly(room_coords)
+# 	# Draw the robot on the screen
+# 	robot.draw(screen)
+# 	# Show everything on the screen
+# 	pygame.display.flip()
+from os import mkdir
+import sys
+
+X_cor = float(sys.argv[1])
+Y_cor = float(sys.argv[2])
+NumIter= int(sys.argv[3])
+
+try:
+	mkdir('img/POS_'+str(X_cor)+'_'+str(Y_cor))
+except:
+	i=90
+
+for i in range(0,NumIter):
+	robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
 	screen.fill(BGCOLOR)
-	# Draw the room
 	draw_poly(room_coords)
-	# Draw the robot on the screen
 	robot.draw(screen)
-	# Show everything on the screen
 	pygame.display.flip()
+	image_data = robot.take_picture(screen)
+	filname = 'img/POS_'+str(X_cor)+'_'+str(Y_cor)+'/'+str(i)+'.png'
+	save_picture(image_data,filname)

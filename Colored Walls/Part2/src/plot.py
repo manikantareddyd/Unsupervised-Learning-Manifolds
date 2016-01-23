@@ -44,7 +44,7 @@ except:
 if LOL==-5000:
 	fold = 'Plots/Plot_Rnd'
 else:
-	fold ='Plots/Plot_'+str(X_int)+'_'+str(Y_int)+'_'+str(N_Neighbours)
+	fold ='Plots/Plot_'+str(X_int)+'_'+str(Y_int)+'_'+str(NumIter)+'_'+str(N_Neighbours)
 
 try:
 	mkdir(fold)

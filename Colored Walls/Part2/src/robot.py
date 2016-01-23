@@ -237,7 +237,14 @@ def move_robot(x,y,theta):
 from os import mkdir
 from random import randint
 import sys
+
+
 LOL = int(sys.argv[1])
+try:
+	mkdir('img')
+except:
+	print "Hi"
+
 if LOL == -5000:
 	print 'lol'
 	for i in range(0,500):
@@ -255,19 +262,25 @@ if LOL == -5000:
 		save_picture(image_data,filname)
 
 else:
-	X_cor = float(sys.argv[1])
-	Y_cor = float(sys.argv[2])
-	NumIter= int(sys.argv[3])
+	X_int 	= float(sys.argv[1])
+	Y_int	= float(sys.argv[2])
 	try:
-		mkdir('img/POS_'+str(X_cor)+'_'+str(Y_cor))
+		fold = 'img/('+str(X_int)+')+('+str(Y_int)+')=1'
+		mkdir(fold)
+		print "hh"
 	except:
 		boo = 900
-	for i in range(0,NumIter):
-		robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
-		screen.fill(BGCOLOR)
-		draw_poly(room_coords)
-		robot.draw(screen)
-		pygame.display.flip()
-		image_data = robot.take_picture(screen)
-		filname = 'img/POS_'+str(X_cor)+'_'+str(Y_cor)+'/'+str(i)+'.png'
-		save_picture(image_data,filname)
+	for poo in range(0,20):
+		NumIter = 180
+		t 		= poo*X_int/20
+		X_cor 	= t
+		Y_cor   = (-X_int*t/Y_int) + 150
+		for i in range(0,NumIter):
+			robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
+			screen.fill(BGCOLOR)
+			draw_poly(room_coords)
+			robot.draw(screen)
+			pygame.display.flip()
+			image_data = robot.take_picture(screen)
+			filname = 'img/('+str(X_int)+')+('+str(Y_int)+')=1'+'/'+str(poo*NumIter+i)+'.png'
+			save_picture(image_data,filname)

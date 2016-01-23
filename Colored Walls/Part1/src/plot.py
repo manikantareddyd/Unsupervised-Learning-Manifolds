@@ -18,13 +18,19 @@ else:
 
 np.seterr(divide='ignore', invalid='ignore')
 if LOL == -5000:
-	file = 'Reduced_data/data_Rnd'
+	file2 = 'Reduced_data/data_Rnd/Dimensions_2.csv'
+	file3 = 'Reduced_data/data_Rnd/Dimensions_3.csv'
 else:
-	file  = 'Reduced_data/data_'+str(X_cor)+'_'+str(Y_cor)+'_'+str(NumIter)+'_'+str(N_Neighbours)+'_'+str(N_Components)
+	file2  = 'Reduced_data/data_'+str(X_cor)+'_'+str(Y_cor)+'_'+str(NumIter)+'_'+str(N_Neighbours)+'/Dimensions_2.csv'
+	file3  = 'Reduced_data/data_'+str(X_cor)+'_'+str(Y_cor)+'_'+str(NumIter)+'_'+str(N_Neighbours)+'/Dimensions_3.csv'
 
-data = np.genfromtxt(file, delimiter=',',  names=['x', 'y', 'z'])
+
+data2 = np.genfromtxt(file2, delimiter=',',  names=['x', 'y'])
+data3 = np.genfromtxt(file3, delimiter=',',  names=['x', 'y', 'z'])
+print "Data Loaded"
+plt.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold')
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-ax.scatter(data['x'], data['y'], data['z'], label='Plot of the 3D Embedded Manifold')
+ax.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold')
 ax.legend()
 plt.show()

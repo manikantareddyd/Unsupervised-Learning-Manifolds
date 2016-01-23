@@ -240,14 +240,18 @@ import sys
 LOL = int(sys.argv[1])
 if LOL == -5000:
 	print 'lol'
-	for i in range(0,-LOL):
+	for i in range(0,500):
 		robot = Robot(x=randint(-180,180),y=randint(-180,180),theta=randint(0,360),FOV=120)
 		screen.fill(BGCOLOR)
 		draw_poly(room_coords)
 		robot.draw(screen)
 		pygame.display.flip()
 		image_data = robot.take_picture(screen)
-		filname = 'img/POS_RND/'+str(i)+'.png'
+		try:
+			mkdir('img/POS_Rnd')
+		except:
+			boo = 900
+		filname = 'img/POS_Rnd/'+str(i)+'.png'
 		save_picture(image_data,filname)
 
 else:
@@ -255,10 +259,9 @@ else:
 	Y_cor = float(sys.argv[2])
 	NumIter= int(sys.argv[3])
 	try:
-		
 		mkdir('img/POS_'+str(X_cor)+'_'+str(Y_cor))
 	except:
-		i=90
+		boo = 900
 	for i in range(0,NumIter):
 		robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
 		screen.fill(BGCOLOR)

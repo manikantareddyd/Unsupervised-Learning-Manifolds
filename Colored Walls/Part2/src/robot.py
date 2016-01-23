@@ -36,11 +36,11 @@ def rot_center(image, angle):
 
 def angle_to_twopoint(x_y,theta):
 	"""Find line along angle theta from given point (x,y)
-	
+
 	Args:
 	    x_y (list or tuple): start point
 	    theta (float): value of angle
-	
+
 	Returns:
 	    tuple: (x,y) of the point to construct the ray
 	"""
@@ -50,11 +50,11 @@ def angle_to_twopoint(x_y,theta):
 
 def wall_ray_intersect_pt(ray_start, ray_end):
 	"""Find intersection of given ray with walls
-	
+
 	Args:
 	    ray_start (tuple): (x1,y1)
 	    ray_end (tuple): (x2,y2)
-	
+
 	Returns:
 	    Tuple: (x,y) coordinates of the intersection point,
 	    none if ray doesn't intersect with any of the walls.
@@ -74,7 +74,7 @@ class Robot(object):
 	def __init__(self, x = 0, y = 0, theta = 0, FOV = 0):
 		"""Constructor for robot class"""
 		# Note the the image is assumed to be 32*32
-		# If you intend to use some other sprite for the 
+		# If you intend to use some other sprite for the
 		# robot you make appropriate in the draw() function
 		self.image = pygame.image.load("src/robot.png")
 		self.x = x
@@ -84,10 +84,10 @@ class Robot(object):
 
 	def draw_FOV(self,surface):
 		"""Auxilary method - written for intermediate testing purpose
-		
+
 		Args:
 		    surface (Pygame Surface object)
-		
+
 		Returns:
 		    RGBA tuple
 		"""
@@ -99,7 +99,7 @@ class Robot(object):
 		# pygame.draw.line(surface, linecolor, center_coord(x,y), center_coord(x2,y2))
 
 		'''Find intersection with wall using method defined in geometry.py
-		Due to precision issues it returns null for some values 
+		Due to precision issues it returns null for some values
 		of theta near 0,90,180 and 270 degrees, so we keep only non null
 		values
 		'''
@@ -112,10 +112,10 @@ class Robot(object):
 		"""Take a picture from the viewpoint of the robot.
 		The picture has the angular width of the FOV (field of view)
 		of the robot.
-		
+
 		Args:
 		    surface (pygame.Surface): surface to sample pixel values from
-		
+
 		Returns:
 		    RGBA list: returns list of RGBA values that form the image that
 		    the robot sees.
@@ -125,8 +125,8 @@ class Robot(object):
 		theta_ini = self.theta
 		self.theta = self.theta - int(self.FOV/2)
 
-		# Captures pixel values at 0.2 degree increments - 
-		# you can use finer/coarser increments to get more 
+		# Captures pixel values at 0.2 degree increments -
+		# you can use finer/coarser increments to get more
 		# detailed/coarser pictures
 		increment = 0.2
 		flag=1
@@ -135,7 +135,7 @@ class Robot(object):
 			x_dash,y_dash = angle_to_twopoint((self.x,self.y),self.theta)
 			int_point = wall_ray_intersect_pt((x,y),(x_dash,y_dash))
 			'''Find intersection with wall using method defined in geometry.py
-			Due to precision issues it returns null for some values 
+			Due to precision issues it returns null for some values
 			of theta near 0,90,180 and 270 degrees, so we keep only non null
 			values
 			'''
@@ -155,10 +155,10 @@ class Robot(object):
 
 	def draw(self, surface):
 		"""Draw on the provided surface
-		
+
 		Args:
 		    surface (pygame surface object): where to draw the robot
-		
+
 		Returns:
 		    VOID
 		"""
@@ -188,7 +188,7 @@ def draw_poly(vertices):
 	Args:
 		vertices (list of tuples): Takes a list of tuples
 		of the form (x_i,y_i)
-	
+
 	Returns:
 		NONE: Doesn't return a value
 	"""
@@ -207,24 +207,24 @@ def save_picture(pixel_value_list,filename):
 
 def move_robot(x,y,theta):
 	"""TODO
-	
+
 	Args:
 	    x (TYPE): Description
 	    y (TYPE): Description
 	    theta (TYPE): Description
-	
+
 	Returns:
 	    TYPE: Description
 	"""
 	pass
-	
+
 # robot = Robot(x=0,y=0,theta=0,FOV=120)
 # i=1
 # while 1:
 # 	for event in pygame.event.get():
 # 		if event.type == pygame.QUIT:
 # 			image_data = robot.take_picture(screen)
-# 			save_picture(image_data,'img/env.png')			
+# 			save_picture(image_data,'img/env.png')
 # 			sys.exit()
 # 	# Fill the screen with specified background color
 # 	screen.fill(BGCOLOR)
@@ -240,14 +240,18 @@ import sys
 LOL = int(sys.argv[1])
 if LOL == -5000:
 	print 'lol'
-	for i in range(0,-LOL):
+	for i in range(0,500):
 		robot = Robot(x=randint(-180,180),y=randint(-180,180),theta=randint(0,360),FOV=120)
 		screen.fill(BGCOLOR)
 		draw_poly(room_coords)
 		robot.draw(screen)
 		pygame.display.flip()
 		image_data = robot.take_picture(screen)
-		filname = 'img/POS_RND/'+str(i)+'.png'
+		try:
+			mkdir('img/POS_Rnd')
+		except:
+			boo = 900
+		filname = 'img/POS_Rnd/'+str(i)+'.png'
 		save_picture(image_data,filname)
 
 else:
@@ -257,7 +261,7 @@ else:
 	try:
 		mkdir('img/POS_'+str(X_cor)+'_'+str(Y_cor))
 	except:
-		i=90
+		boo = 900
 	for i in range(0,NumIter):
 		robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
 		screen.fill(BGCOLOR)

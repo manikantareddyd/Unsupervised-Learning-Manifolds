@@ -56,7 +56,7 @@ except:
 file2  = fold +'/Plot_2.png'
 file3  = fold +'/Plot_3.png'
 
-plt.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_int)+' Y='+str(Y_int))
+plt.scatter(data2['x'], data2['y'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_int)+' Y='+str(Y_int))
 plt.savefig(file2)
 
 fig = plt.figure()

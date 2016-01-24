@@ -23,7 +23,7 @@ for i in range(1,NumIter):
 	else:
 		file = 'img/POS_'+str(X_cor)+'_'+str(Y_cor)+'/'+str(i)+'.png'
 	img = Image.open(file)
-	img.load()
+	#img.load()
 	data = (np.array(img)).flatten()
 	images_Data.append(data)
 images_Data = np.array(images_Data)
@@ -45,7 +45,7 @@ Data_Transform_2	=	Manifold_2.fit_transform(images_Data)
 
 
 print "Trying to fit a 3d manifold"
-Manifold_3			= 	manifold.Isomap(N_Neighbours, 3).fit_transform(images_Data)
+Manifold_3			= 	manifold.Isomap(N_Neighbours, 3)
 Data_Transform_3	=   Manifold_3.fit_transform(images_Data)
 
 print "Manifolds now Created. Writing to files"

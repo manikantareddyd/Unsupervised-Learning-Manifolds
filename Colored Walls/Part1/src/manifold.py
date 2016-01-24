@@ -13,7 +13,7 @@ if LOL == -5000:
 else:
 	X_cor = float(sys.argv[1])
 	Y_cor = float(sys.argv[2])
-	NumIter = int(sys.argv[3])
+	NumIter = 500
 
 
 images_Data = []
@@ -35,13 +35,6 @@ try:
 except:
 	print "Number of Neighbours not specified. Assuming 10"
 	N_Neighbours = 10
-
-
-
-print "Trying to fit a 2d manifold"
-Manifold_2  		= 	manifold.Isomap(N_Neighbours, 2)
-Data_Transform_2	=	Manifold_2.fit_transform(images_Data)
-
 
 
 print "Trying to fit a 3d manifold"
@@ -71,11 +64,9 @@ except:
 	print "Everything STILL seems OK"
 
 
-file2  = fold +'/Dimensions_2.csv'
 file3  = fold +'/Dimensions_3.csv'
 
 
-np.savetxt(file2,Data_Transform_2,delimiter=",")
 np.savetxt(file3,Data_Transform_3,delimiter=",")
 
 print "Files have been created"

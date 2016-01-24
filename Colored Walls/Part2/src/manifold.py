@@ -36,15 +36,9 @@ except:
 	print "Number of Neighbours not specified. Assuming 10"
 	N_Neighbours = 10
 
-
-if int(sys.argv[3])==2:
-	print "Trying to fit a 2d manifold"
-	Manifold_2  		= 	manifold.Isomap(N_Neighbours, 2)
-	Data_Transform_2	=	Manifold_2.fit_transform(images_Data)
-else:
-	print "Trying to fit a 3d manifold"
-	Manifold_3			= 	manifold.Isomap(N_Neighbours, 3)
-	Data_Transform_3	=   Manifold_3.fit_transform(images_Data)
+print "Trying to fit a 3d manifold"
+Manifold_3			= 	manifold.Isomap(N_Neighbours, 3)
+Data_Transform_3	=   Manifold_3.fit_transform(images_Data)
 
 print "Manifolds now Created. Writing to files"
 
@@ -69,12 +63,8 @@ except:
 	print "Everything STILL seems OK"
 
 
-file2  = fold +'/Dimensions_2.csv'
 file3  = fold +'/Dimensions_3.csv'
 
-if int(sys.argv[3])==2:
-	np.savetxt(file2,Data_Transform_2,delimiter=",")
-else:
-	np.savetxt(file3,Data_Transform_3,delimiter=",")
+np.savetxt(file3,Data_Transform_3,delimiter=",")
 
 print "Files have been created"

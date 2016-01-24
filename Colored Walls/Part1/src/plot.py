@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.gridspec as gridspec
 import numpy as np
 import sys
 from os import mkdir
@@ -13,7 +14,7 @@ if LOL == -5000:
 else:
 	X_cor = float(sys.argv[1])
 	Y_cor = float(sys.argv[2])
-	NumIter = int(sys.argv[3])
+	NumIter = 500
 	try:
 		N_Neighbours = int(sys.argv[4])
 	except:
@@ -26,10 +27,8 @@ if LOL==-5000:
 else:
 	fold ='Reduced_data/data_'+str(X_cor)+'_'+str(Y_cor)+'_'+str(NumIter)+'_'+str(N_Neighbours)
 
-file2  = fold +'/Dimensions_2.csv'
 file3  = fold +'/Dimensions_3.csv'
 
-data2 = np.genfromtxt(file2, delimiter=',',  names=['x', 'y'])
 data3 = np.genfromtxt(file3, delimiter=',',  names=['x', 'y', 'z'])
 print "Data Loaded"
 
@@ -53,15 +52,39 @@ except:
 	print "Everything STILL seems OK"
 
 
-file2  = fold +'/Plot_2.png'
-file3  = fold +'/Plot_3.png'
+file  = fold +'/Plot_'
 
-plt.scatter(data2['x'], data2['y'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
-plt.savefig(file2)
+
+# fig = plt.figure()
+# gs = gridspec.GridSpec(2, 2)
+# a1=plt.scatter(data3['x'], data3['y'], label='Plot of the XY projection 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
+# a1=plt.subplot(gs[0, 0])
+# a2=plt.scatter(data3['y'], data3['z'], label='Plot of the YZ projection 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
+# a2=plt.subplot(gs[0, 1])
+# a3=plt.scatter(data3['z'], data3['x'], label='Plot of the ZX projection 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
+# a3=plt.subplot(gs[1, 0])
+# a4 = fig.gca(projection='3d')
+# a4.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
+# a4 = plt.subplot(gs[1, 1])
+# fig.add_subplot(a1)
+# fig.add_subplot(a2)
+# fig.add_subplot(a3)
+# fig.add_subplot(a4)ction='3d'
+# fig.savefig(file+'3D.png')
 
 fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_cor)+' Y='+str(Y_cor))
-ax.legend()
-fig.savefig(file3)
-plt.show()
+ax = fig.add_subplot(2,2,1)
+ax.scatter(data3['x'], data3['y'])
+ax.set_title('XY projection')
+ax = fig.add_subplot(2,2,2)
+ax.scatter(data3['y'], data3['z'])
+ax.set_title('YZ projection')
+ax = fig.add_subplot(2,2,3)
+ax.scatter(data3['z'], data3['x'])
+ax.set_title('ZX projection')
+ax = fig.add_subplot(2,2,4,projection='3d')
+ax.scatter(data3['x'], data3['y'],data3['z'])
+ax.set_title('3D Manifold')
+fig.savefig(file+'All.png')
+
+

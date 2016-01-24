@@ -26,11 +26,11 @@ if LOL==-5000:
 else:
 	fold ='Reduced_data/data_'+str(X_int)+'_'+str(Y_int)+'_'+'_'+str(N_Neighbours)
 
-file2  = fold +'/Dimensions_2.csv'
+
 file3  = fold +'/Dimensions_3.csv'
 
-data2 = np.genfromtxt(file2, delimiter=',',  names=['x', 'y'])
 data3 = np.genfromtxt(file3, delimiter=',',  names=['x', 'y', 'z'])
+
 print "Data Loaded"
 
 
@@ -53,15 +53,19 @@ except:
 	print "Everything STILL seems OK"
 
 
-file2  = fold +'/Plot_2.png'
-file3  = fold +'/Plot_3.png'
-
-plt.scatter(data2['x'], data2['y'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_int)+' Y='+str(Y_int))
-plt.savefig(file2)
+file  = fold +'/Plot_.png'
 
 fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.scatter(data3['x'], data3['y'], data3['z'], label='Plot of the 3D Embedded Manifold'+' X='+str(X_int)+' Y='+str(Y_int))
-ax.legend()
-fig.savefig(file3)
-plt.show()
+ax = fig.add_subplot(2,2,1)
+ax.scatter(data3['x'], data3['y'])
+ax.set_title('XY projection')
+ax = fig.add_subplot(2,2,2)
+ax.scatter(data3['y'], data3['z'])
+ax.set_title('YZ projection')
+ax = fig.add_subplot(2,2,3)
+ax.scatter(data3['z'], data3['x'])
+ax.set_title('ZX projection')
+ax = fig.add_subplot(2,2,4,projection='3d')
+ax.scatter(data3['x'], data3['y'],data3['z'])
+ax.set_title('3D Manifold')
+fig.savefig(file+'All.png')

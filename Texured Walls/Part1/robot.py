@@ -112,10 +112,10 @@ class Robot(object):
 		"""Take a picture from the viewpoint of the robot.
 		The picture has the angular width of the FOV (field of view)
 		of the robot.
-		
+
 		Args:
 		    surface (pygame.Surface): surface to sample pixel values from
-		
+
 		Returns:
 		    RGBA list: returns list of RGBA values that form the image that
 		    the robot sees.
@@ -125,23 +125,29 @@ class Robot(object):
 		theta_ini = self.theta
 		self.theta = self.theta - int(self.FOV/2)
 
-		# Captures pixel values at 0.2 degree increments - 
-		# you can use finer/coarser increments to get more 
+		# Captures pixel values at 0.2 degree increments -
+		# you can use finer/coarser increments to get more
 		# detailed/coarser pictures
 		increment = 0.2
+		flag=1
 		for x in numpy.arange(0,self.FOV,increment):
 			x,y = self.x, self.y
 			x_dash,y_dash = angle_to_twopoint((self.x,self.y),self.theta)
 			int_point = wall_ray_intersect_pt((x,y),(x_dash,y_dash))
 			'''Find intersection with wall using method defined in geometry.py
-			Due to precision issues it returns null for some values 
+			Due to precision issues it returns null for some values
 			of theta near 0,90,180 and 270 degrees, so we keep only non null
 			values
 			'''
 			if int_point:
-				# Surface.get_at() returns RGBA (red,green,blue,alpha) values -
-				# [:3] keeps only the first three i.e RGB values.
-				image_array.append(pygame.Surface.get_at(screen,[int(x) for x in center_coord(int_point[0],int_point[1])])[:3])
+				for i in range(flag):
+					image_array.append(pygame.Surface.get_at(screen,[int(x) for x in center_coord(int_point[0],int_point[1])])[:3])
+				flag = 1
+			else:
+				if image_array:
+					image_array.append(image_array[-1])
+				else:
+					flag += 1
 			self.theta += increment
 		self.theta = theta_ini
 		return image_array

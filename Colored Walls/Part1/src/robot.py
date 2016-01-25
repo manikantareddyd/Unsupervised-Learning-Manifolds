@@ -18,7 +18,7 @@ room_coords = [(-200,-200),(200,-200),(200,200),(-200,200)]
 BGCOLOR = 250,250,250				# background color for screen
 HEIGHT = 700						# Height of screen
 WIDTH = 900							# Width of screen
-outimg_width = 30					# Width of output image
+outimg_width = 10					# Width of output image
 
 # Ceate a graphical window to work in :
 screen = pygame.display.set_mode((WIDTH,HEIGHT))

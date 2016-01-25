@@ -222,26 +222,26 @@ def move_robot(x,y,theta):
 from os import mkdir
 import random
 import sys
-coord=[]
-random.seed(900)
-for i in range(0,100):
-	X_cor = random.randint(-180,180)
-	Y_cor = random.randint(-180,180)
-	coord.append([X_cor,Y_cor])
-	for j in range(0,100):
-		robot = Robot(x=X_cor,y=Y_cor,theta=int((j*360/100)),FOV=120)
-		screen.fill(BGCOLOR)
-		draw_poly(room_coords)
-		robot.draw(screen)
-		pygame.display.flip()
-		image_data = robot.take_picture(screen)
-		filname = 'img/train/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(j)+'.png'
-		save_picture(image_data,filname)
+# coord=[]
+# random.seed(900)
+# for i in range(0,100):
+# 	X_cor = random.randint(-180,180)
+# 	Y_cor = random.randint(-180,180)
+# 	coord.append([X_cor,Y_cor])
+# 	for j in range(0,100):
+# 		robot = Robot(x=X_cor,y=Y_cor,theta=int((j*360/100)),FOV=120)
+# 		screen.fill(BGCOLOR)
+# 		draw_poly(room_coords)
+# 		robot.draw(screen)
+# 		pygame.display.flip()
+# 		image_data = robot.take_picture(screen)
+# 		filname = 'img/train/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(j)+'.png'
+# 		save_picture(image_data,filname)
 
-coord = numpy.array(coord)
-numpy.savetxt('train_Coords.csv',coord,delimiter=",")
+# coord = numpy.array(coord)
+# numpy.savetxt('train_Coords.csv',coord,delimiter=",")
 coord=[]
-random.seed(9000)
+random.seed(56)
 for i in range(0,100):
 	X_cor = random.randint(-180,180)
 	Y_cor = random.randint(-180,180)
@@ -253,7 +253,7 @@ for i in range(0,100):
 	robot.draw(screen)
 	pygame.display.flip()
 	image_data = robot.take_picture(screen)
-	filname = 'img/test/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(i)+'.png'
+	filname = 'img/test/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(t)+'.png'
 	save_picture(image_data,filname)
 
 coord = numpy.array(coord)

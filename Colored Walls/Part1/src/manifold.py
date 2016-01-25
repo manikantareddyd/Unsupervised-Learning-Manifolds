@@ -41,6 +41,7 @@ print "Trying to fit a 3d manifold"
 Manifold_3			= 	manifold.Isomap(N_Neighbours, 3)
 Data_Transform_3	=   Manifold_3.fit_transform(images_Data)
 
+
 print "Manifolds now Created. Writing to files"
 
 

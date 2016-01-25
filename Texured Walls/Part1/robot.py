@@ -18,7 +18,7 @@ room_coords = [(-200,-200),(200,-200),(200,200),(-200,200)]
 BGCOLOR = 250,250,250				# background color for screen
 HEIGHT = 700						# Height of screen
 WIDTH = 900							# Width of screen
-outimg_width = 30					# Width of output image
+outimg_width = 10					# Width of output image
 
 # Ceate a graphical window to work in :
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -253,7 +253,8 @@ if LOL == -5000:
 	for i in range(0,500):
 		robot = Robot(x=randint(-180,180),y=randint(-180,180),theta=randint(0,360),FOV=120)
 		screen.fill(BGCOLOR)
-		draw_poly(room_coords)
+		load_background('texture.jpg')
+		#draw_poly(room_coords)
 		robot.draw(screen)
 		pygame.display.flip()
 		image_data = robot.take_picture(screen)
@@ -267,7 +268,7 @@ if LOL == -5000:
 else:
 	X_cor = float(sys.argv[1])
 	Y_cor = float(sys.argv[2])
-	NumIter= int(sys.argv[3])
+	NumIter= 500
 	try:
 		mkdir('img/POS_'+str(X_cor)+'_'+str(Y_cor))
 	except:
@@ -275,7 +276,8 @@ else:
 	for i in range(0,NumIter):
 		robot = Robot(x=X_cor,y=Y_cor,theta=(i*360/NumIter),FOV=120)
 		screen.fill(BGCOLOR)
-		draw_poly(room_coords)
+		load_background('texture.jpg')
+		#draw_poly(room_coords)
 		robot.draw(screen)
 		pygame.display.flip()
 		image_data = robot.take_picture(screen)

@@ -36,11 +36,11 @@ def rot_center(image, angle):
 
 def angle_to_twopoint(x_y,theta):
 	"""Find line along angle theta from given point (x,y)
-
+	
 	Args:
 	    x_y (list or tuple): start point
 	    theta (float): value of angle
-
+	
 	Returns:
 	    tuple: (x,y) of the point to construct the ray
 	"""
@@ -50,14 +50,14 @@ def angle_to_twopoint(x_y,theta):
 
 def wall_ray_intersect_pt(ray_start, ray_end):
 	"""Find intersection of given ray with walls
-
+	
 	Args:
 	    ray_start (tuple): (x1,y1)
 	    ray_end (tuple): (x2,y2)
-
+	
 	Returns:
 	    Tuple: (x,y) coordinates of the intersection point,
-	    none if ray doesn't intersect with any of the walls.
+	    None if ray doesn't intersect with any of the walls.
 	"""
 	for i in xrange(len(room_coords)):
 		wall_start = room_coords[i]
@@ -74,7 +74,7 @@ class Robot(object):
 	def __init__(self, x = 0, y = 0, theta = 0, FOV = 0):
 		"""Constructor for robot class"""
 		# Note the the image is assumed to be 32*32
-		# If you intend to use some other sprite for the
+		# If you intend to use some other sprite for the 
 		# robot you make appropriate in the draw() function
 		self.image = pygame.image.load("src/robot.png")
 		self.x = x
@@ -84,10 +84,10 @@ class Robot(object):
 
 	def draw_FOV(self,surface):
 		"""Auxilary method - written for intermediate testing purpose
-
+		
 		Args:
 		    surface (Pygame Surface object)
-
+		
 		Returns:
 		    RGBA tuple
 		"""
@@ -96,10 +96,10 @@ class Robot(object):
 		'''Uncomment the next line to visualize a ray emerging out from the robot
 		and intersecting the walls: strictly for debugging and visualizing,
 		remember to comment it while taking pixel values at point of intersection'''
-		# pygame.draw.line(surface, linecolor, center_coord(x,y), center_coord(x2,y2))
+		pygame.draw.line(surface, linecolor, center_coord(x,y), center_coord(x2,y2))
 
 		'''Find intersection with wall using method defined in geometry.py
-		Due to precision issues it returns null for some values
+		Due to precision issues it returns null for some values 
 		of theta near 0,90,180 and 270 degrees, so we keep only non null
 		values
 		'''
@@ -152,13 +152,12 @@ class Robot(object):
 		self.theta = theta_ini
 		return image_array
 
-
 	def draw(self, surface):
 		"""Draw on the provided surface
-
+		
 		Args:
 		    surface (pygame surface object): where to draw the robot
-
+		
 		Returns:
 		    VOID
 		"""
@@ -188,7 +187,7 @@ def draw_poly(vertices):
 	Args:
 		vertices (list of tuples): Takes a list of tuples
 		of the form (x_i,y_i)
-
+	
 	Returns:
 		NONE: Doesn't return a value
 	"""
@@ -205,50 +204,55 @@ def save_picture(pixel_value_list,filename):
 	environment.putdata(tuple(image_data)*outimg_width)
 	environment.save(filename)
 
+def load_background(filename):
+	bg = pygame.image.load(filename)
+	screen.blit(bg,(0,0))
+
 def move_robot(x,y,theta):
 	"""TODO
-
+	
 	Args:
 	    x (TYPE): Description
 	    y (TYPE): Description
 	    theta (TYPE): Description
-
+	
 	Returns:
 	    TYPE: Description
 	"""
 	pass
-
-
+	
 from os import mkdir
 import random
 import sys
-# coord=[]
-# random.seed(900)
-# for i in range(0,100):
-# 	X_cor = random.randint(-180,180)
-# 	Y_cor = random.randint(-180,180)
-# 	coord.append([X_cor,Y_cor])
-# 	for j in range(0,100):
-# 		robot = Robot(x=X_cor,y=Y_cor,theta=int((j*360/100)),FOV=120)
-# 		screen.fill(BGCOLOR)
-# 		draw_poly(room_coords)
-# 		robot.draw(screen)
-# 		pygame.display.flip()
-# 		image_data = robot.take_picture(screen)
-# 		filname = 'img/train/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(j)+'.png'
-# 		save_picture(image_data,filname)
+coord=[]
+random.seed(900)
+for i in range(0,100):
+	X_cor = random.randint(-180,180)
+	Y_cor = random.randint(-180,180)
+	coord.append([X_cor,Y_cor])
+	for j in range(0,100):
+		robot = Robot(x=X_cor,y=Y_cor,theta=int((j*360/100)),FOV=120)
+		screen.fill(BGCOLOR)
+		#load_background('src/texture.jpg')		
+		draw_poly(room_coords)
+		robot.draw(screen)
+		pygame.display.flip()
+		image_data = robot.take_picture(screen)
+		filname = 'img/train/'+str(X_cor)+'_'+str(Y_cor)+'_'+str(j)+'.png'
+		save_picture(image_data,filname)
 
-# coord = numpy.array(coord)
-# numpy.savetxt('train_Coords.csv',coord,delimiter=",")
+coord = numpy.array(coord)
+numpy.savetxt('train_Coords.csv',coord,delimiter=",")
 coord=[]
 random.seed(56)
-for i in range(0,100):
+for i in range(0,1000):
 	X_cor = random.randint(-180,180)
 	Y_cor = random.randint(-180,180)
 	t     = random.randint(0,360)
 	coord.append([X_cor,Y_cor,t])	
 	robot = Robot(x=X_cor,y=Y_cor,theta=t,FOV=120)
 	screen.fill(BGCOLOR)
+	#load_background('src/texture.jpg')		
 	draw_poly(room_coords)
 	robot.draw(screen)
 	pygame.display.flip()

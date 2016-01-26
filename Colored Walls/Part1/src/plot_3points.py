@@ -13,7 +13,7 @@ np.seterr(divide='ignore', invalid='ignore')
 
 
 
-file3  = 'Reduced_data/data_3points/Dimensions_3-test.csv'
+file3  = 'Reduced_data/data_3points/Dimensions_3-test2.csv'
 
 data3 = np.genfromtxt(file3, delimiter=',',  names=['x', 'y', 'z'])
 print "Data Loaded"
@@ -33,7 +33,7 @@ ax.set_title('ZX projection')
 ax = fig.add_subplot(2,2,4,projection='3d')
 ax.scatter(data3['x'], data3['y'],data3['z'])
 ax.set_title('3D Manifold')
-fig.savefig('3points-test.png')
+fig.savefig('3points-test2.png')
 plt.show()
 
 
